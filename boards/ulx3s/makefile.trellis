@@ -1,0 +1,49 @@
+# ******* project, board and chip name *******
+PROJECT = bootloader
+BOARD = ulx3s
+# 12 25 45 85
+FPGA_SIZE = 85
+
+# ******* if programming with OpenOCD *******
+# using local latest openocd until in linux distribution
+OPENOCD=openocd_ft232r
+# default onboard usb-jtag
+OPENOCD_INTERFACE=$(SCRIPTS)/ft231x.ocd
+# ulx3s-jtag-passthru
+#OPENOCD_INTERFACE=$(SCRIPTS)/ft231x2.ocd
+# ulx2s
+#OPENOCD_INTERFACE=$(SCRIPTS)/ft232r.ocd
+# external jtag
+#OPENOCD_INTERFACE=$(SCRIPTS)/ft2232.ocd
+
+# ******* design files *******
+CONSTRAINTS = constraints/ulx3s_v20.lpf
+TOP_MODULE = bootloader_ulx3s
+TOP_MODULE_FILE = $(TOP_MODULE).v
+
+# *.vhd those files will be converted to *.v files with vhdl2vl (warning overwriting/deleting)
+VERILOG_FILES = \
+$(TOP_MODULE_FILE) \
+ecp5pll.sv \
+../../common/tinyfpga_bootloader.v \
+../../common/edge_detect.v \
+../../common/strobe.v \
+../../common/usb_fs_in_arb.v \
+../../common/usb_fs_in_pe.v \
+../../common/usb_fs_out_arb.v \
+../../common/usb_fs_out_pe.v \
+../../common/usb_fs_pe.v \
+../../common/usb_fs_rx.v \
+../../common/usb_fs_tx.v \
+../../common/usb_fs_tx_mux.v \
+../../common/usb_reset_det.v \
+../../common/usb_serial_ctrl_ep.v \
+../../common/usb_spi_bridge_ep.v \
+
+# synthesis options
+NEXTPNR_OPTIONS = --timing-allow-fail
+
+SCRIPTS = scripts
+include $(SCRIPTS)/diamond_path.mk
+include $(SCRIPTS)/trellis_path.mk
+include $(SCRIPTS)/trellis_main.mk
