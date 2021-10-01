@@ -126,10 +126,11 @@ module bootloader_ulx3s (
 
   USRMCLK usrmclk_inst (
     .USRMCLKI(pin_sck),
-	.USRMCLKTS(pin_cs_i)
+    .USRMCLKTS(pin_cs_i)
   ) /* synthesis syn_noprune=1 */;
 
-  assign reset = btn[0];
-  assign led[7:1] = 0;
+  assign reset = ~btn[0];
+  assign led[6:1] = 0;
+  assign led[7] = reset;
 endmodule
 `default_nettype wire
