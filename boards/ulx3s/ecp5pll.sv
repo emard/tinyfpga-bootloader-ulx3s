@@ -183,10 +183,10 @@ module ecp5pll
   localparam error_out3_hz = out3_hz > 0 ? abs(out3_hz - params_fvco / params_secondary3_div) > out3_tol_hz : 0;
   // diamond: won't compile this, comment it out. Workaround follows using division by zero
 
-  //if(error_out0_hz) $error("out0_hz tolerance exceeds out0_tol_hz");
-  //if(error_out1_hz) $error("out1_hz tolerance exceeds out1_tol_hz");
-  //if(error_out2_hz) $error("out2_hz tolerance exceeds out2_tol_hz");
-  //if(error_out3_hz) $error("out3_hz tolerance exceeds out3_tol_hz");
+  if(error_out0_hz) $error("out0_hz tolerance exceeds out0_tol_hz");
+  if(error_out1_hz) $error("out1_hz tolerance exceeds out1_tol_hz");
+  if(error_out2_hz) $error("out2_hz tolerance exceeds out2_tol_hz");
+  if(error_out3_hz) $error("out3_hz tolerance exceeds out3_tol_hz");
 
   // diamond: trigger error with division by zero, doesn't accept $error()
   localparam trig_out0_hz = error_out0_hz ? 1/0 : 0;
